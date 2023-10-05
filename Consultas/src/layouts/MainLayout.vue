@@ -3,13 +3,13 @@
     <q-header elevated>
       <q-toolbar>
 
-        <q-toolbar-title class="">
+        <q-toolbar-title class="row justify-center">
           CONSULTA POR DNI
         </q-toolbar-title>
 
       </q-toolbar>
     </q-header>
-    <q-page-conteiner>
+    <q-page-conteiner class="row justify-center" >
       <index-page></index-page>
     </q-page-conteiner>
 

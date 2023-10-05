@@ -37,7 +37,7 @@
         />
       </div>
       <q-card-section>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit
+        Esto es una consulta realiza por Selene Culquicondor.
       </q-card-section>
     </q-card>
   </div>
