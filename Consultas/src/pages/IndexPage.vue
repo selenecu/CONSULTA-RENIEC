@@ -1,24 +1,33 @@
 <template>
-  <div class="q-pa-md justify-center">
-    <q-card class="q-pa-md justify-center" style="max-width: 600px">
+  <div class="q-pa-md justify-center" >
+    <q-card class="q-pa-md justify-center" style="max-width: 700px">
       <img src="http://www.serperuano.com/wp-content/uploads/2013/12/reniec.jpg" />
       <q-card-section>
-        <div class="justify-center" style="max-width: 350px">
+        <div class="justify-center" style="max-width: 350px" >
           <q-form @submit="Buscar" @reset="Limpiar" class="q-gutter-md">
             <q-input
+            rounded outlined
               filled
               v-model="dni"
               type="text"
               maxlength="8"
               onkeypress="return (event.charCode >= 48 && event.charCode <= 57)"
-              label="Documento de Identidad *"
+              label="Documento de Identidad *" counter
               lazy-rules
               :rules="[
                 (val) => (val && val.length === 8) || 'Por favor ingrese un número de DNI válido'
               ]"
-            />
+            >
+            <template v-slot:append>
+              <q-avatar>
+                <img src="https://cdn-icons-png.flaticon.com/512/49/49152.png" @click="dni = ''" class="cursor-pointer">
+                <q-icon name="close" @click="dni = ''" class="cursor-pointer" />
+              </q-avatar>
+            </template>
+            </q-input>
             <div>
               <q-btn label="Buscar" type="submit" color="primary" />
+
               <q-btn label="Limpiar" type="reset" color="primary" flat class="q-ml-sm" @click="Limpiar" />
             </div>
           </q-form>
@@ -26,6 +35,7 @@
       </q-card-section>
       <div class="q-pa-md justify-center" style="max-width: 100%">
         <q-table
+          class="form"
           title="DATOS"
           :rows="rows"
           :columns="columns"
@@ -50,6 +60,7 @@ import { defineComponent, ref, onMounted } from "vue";
 export default defineComponent({
   name: "IndexPage",
   setup() {
+
     const dni = ref("");
     const columns = [
       {
@@ -127,6 +138,9 @@ export default defineComponent({
 <style scoped>
 .q-pa-md {
   padding: 5%;
+}
+.form {
+
 }
 </style>
 
