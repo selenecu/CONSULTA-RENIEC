@@ -97,11 +97,15 @@ useEffect(() => {
           type="text"
           placeholder="Consultar DNI ..."
         />
-        {empty && <Warn>El campo no puede estar vacío</Warn>}
-        {notFound && <Warn>No hay resultados</Warn>}
-
-        <SubmitBtn type="submit">Consultar</SubmitBtn>
+        
+        <SubmitBtn type="submit">Consultar
+          
+        </SubmitBtn>
       </InputArea>
+      <Container> {empty && <Warn>El campo no puede estar vacío</Warn>}</Container>
+      <Container>
+        {notFound && <Warn>No hay resultados</Warn>}</Container>
+       
     </Container>
   );
 };
@@ -223,5 +227,6 @@ const SubmitBtn = styled.button`
    @media (max-width: 650px) and (min-width: 400px) {
     width: 10.4rem;
     font-size: 1.3rem;
+    display: flex;
   }
 `;
