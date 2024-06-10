@@ -1,34 +1,29 @@
 import styled from "styled-components";
 
 interface TopAreaProps {
-  username: string;
-  bio: string;
-  name: string;
-  joinedAt: string;
-  pfp: string;
+  nombres: string;
+  dni: string;
+  apellidoPaterno: string;
+  apellidoMaterno: string;
 }
 
 export const TopArea = ({
-  username,
-  name,
-  joinedAt,
-  bio,
-  pfp,
+  nombres,
+  dni,
+  apellidoPaterno,
+  apellidoMaterno,
 }: TopAreaProps) => {
   return (
     <>
       <Info>
-        <Pfp src={pfp} alt={name} />
-        <SideInfo>
-          <Name>{name}</Name>
-          <Username>
-            <a href={`https://github.com/${username}`}>@{username}</a>
-          </Username>
+    <SideInfo>
+    <Nombres><p style={{ fontWeight: "normal" }}>NOMBRES:</p>{nombres}</Nombres>
+    <ApellidoPaterno><p style={{ fontWeight: "normal" }}>APELLIDO PATERNO:</p>{apellidoPaterno}</ApellidoPaterno>
+    <ApellidoMaterno><p style={{ fontWeight: "normal" }}>APELLIDO MATERNO:</p>{apellidoMaterno}</ApellidoMaterno>
 
-          <JoinedAt>{joinedAt}</JoinedAt>
-        </SideInfo>
+    <Dni><p style={{ fontWeight: "normal" }}>DNI:</p>{dni}</Dni>
+    </SideInfo>
       </Info>
-      <Bio>{bio}</Bio>
     </>
   );
 };
@@ -38,7 +33,7 @@ const Info = styled.div`
   align-items: center;
 `;
 
-const Bio = styled.p`
+const Dni = styled.span`
   color: ${(props) => props.theme.colors.textNorm};
   font-size: 1.4rem;
   line-height: 192%;
@@ -50,20 +45,14 @@ const Bio = styled.p`
   }
 `;
 
-const Pfp = styled.img`
-  height: 75px;
-  width: 75px;
-  border-radius: 50%;
-  margin-right: 2rem;
+const ApellidoMaterno = styled.strong`
+  font-weight: bold;
+  font-size: 1.7rem;
+  line-height: 2.4rem;
+  color: ${(props) => props.theme.colors.textBolded};
 
   @media (min-width: 768px) {
-    width: 117px;
-    height: 117px;
-    margin-right: 4.1rem;
-  }
-
-  @media (min-width: 900px) {
-    display: none;
+    font-size: 2.7rem;
   }
 `;
 
@@ -82,7 +71,7 @@ const SideInfo = styled.div`
   }
 `;
 
-const Name = styled.strong`
+const Nombres = styled.strong`
   font-weight: bold;
   font-size: 1.7rem;
   line-height: 2.4rem;
@@ -93,24 +82,13 @@ const Name = styled.strong`
   }
 `;
 
-const Username = styled.span`
-  font-size: 1.4rem;
-  line-height: 2rem;
-  color: #0079ff;
-  margin-bottom: 0.6rem;
+const ApellidoPaterno = styled.strong`
+  font-weight: bold;
+  font-size: 1.7rem;
+  line-height: 2.4rem;
+  color: ${(props) => props.theme.colors.textBolded};
 
   @media (min-width: 768px) {
-    font-size: 1.6rem;
-    margin-top: 0.5rem;
-  }
-`;
-
-const JoinedAt = styled.span`
-  font-size: 1.4rem;
-  line-height: 2rem;
-  color: ${(props) => props.theme.colors.textNorm};
-
-  @media (min-width: 768px) {
-    font-size: 1.6rem;
+    font-size: 2.7rem;
   }
 `;

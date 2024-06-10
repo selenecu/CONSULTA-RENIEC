@@ -1,10 +1,9 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { ThemeContext } from "../contexts/ThemeContext";
-import { TopAreaProps, UserProps } from "../types";
-import { joinedDate } from "../utils/formatter";
+import { TopAreaProps, DniProps } from "../types";
 
-export const TopArea = ({ setUser }: TopAreaProps) => {
+export const TopArea = ({ setDni }: TopAreaProps) => {
   const { changeTheme, lightMode } = useContext(ThemeContext);
   const [empty, setEmpty] = useState<boolean>(false);
   const [notFound, setNotFound] = useState<boolean>(false);
@@ -17,7 +16,7 @@ export const TopArea = ({ setUser }: TopAreaProps) => {
       usernameRef.current?.value === undefined
     ) {
       setEmpty(true);
-      setUser(null);
+      setDni(null);
       return;
     }
 
@@ -25,34 +24,41 @@ export const TopArea = ({ setUser }: TopAreaProps) => {
     fetchUser(usernameRef.current.value);
   }
 
-  async function fetchUser(username: string) {
-    const response = await fetch(`https://peruvian-dni-info.p.rapidapi.com/dni//${username}`);
+  async function fetchUser(dni: string) {
+    const apiKey = 'c52e5b9f5dmshd06f0e1ff5a802ep1bb4f8jsn329094d00cfa';
+    const apiHost = 'peruvian-dni-info.p.rapidapi.com';
+
+    const response = await fetch(`https://peruvian-dni-info.p.rapidapi.com/dni/${dni}`, {
+        headers: {
+            'x-rapidapi-key': apiKey,
+            'x-rapidapi-host': apiHost,
+        }
+    });
+
     const data = await response.json();
 
     if (response.status != 200) {
-      setNotFound(true);
-      setUser(null);
-      return;
+        setNotFound(true);
+        setDni(null);
+        return;
     }
 
     setNotFound(false);
 
-    const user: UserProps = {
-      nombres: data.nombres,
-      dni: data.dni,
-      apellidoPaterno: data.apellidoPaterno,
-      apellidoMaterno: data.apellidoMaterno,
-     
+    const user: DniProps = {
+        nombres: data.result.nombres,
+        dni: data.result.dni,
+        apellidoPaterno: data.result.apellidoPaterno,
+        apellidoMaterno: data.result.apellidoMaterno,
     };
-    console.log(data);
+    console.log(data, user);
 
-    setUser(user);
-  }
+    setDni(user);
+}
 
-  useEffect(()=> {
-    fetchUser(inputUser)
-  },[inputUser])
-
+useEffect(() => {
+  fetchUser(inputUser);
+}, [inputUser]);
   return (
     <Container>
       <ThemeArea>
@@ -91,8 +97,8 @@ export const TopArea = ({ setUser }: TopAreaProps) => {
           type="text"
           placeholder="Search username ..."
         />
-        {empty && <Warn>Enter User</Warn>}
-        {notFound && <Warn>Not Found</Warn>}
+        {empty && <Warn>El campo no puede estar vacío</Warn>}
+        {notFound && <Warn>No hay resultados</Warn>}
 
         <SubmitBtn type="submit">Search</SubmitBtn>
       </InputArea>

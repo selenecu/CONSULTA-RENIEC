@@ -2,23 +2,21 @@ import styled from "styled-components"
 import { ThemeContextProvider} from "./contexts/ThemeContext"
 import {TopArea} from "./components/TopArea";
 import { useState } from "react";
-import { UserProps } from "./types";
-import Index  from "./components/UserData/Index";
+import { DniProps } from "./types";
+import {Index}  from "./components/UserData/Index";
 
 function App() {
-  const [user, setUser] = useState<UserProps | null>(null)
+  const [user, setDni] = useState<DniProps | null>(null)
 
-  function setUserData (user: UserProps | null): void {
-    setUser(user)
+  function setDniData (dni: DniProps | null): void {
+    setDni(dni)
   }
 
   return (
     <ThemeContextProvider>
       <Container>
-        <TopArea setUser={setUserData} />
-        {user && 
-        <Index user={user} />
-        }
+        <TopArea setDni={setDniData} />
+        { user && <Index user={user} /> }
       </Container>
     </ThemeContextProvider>
   );

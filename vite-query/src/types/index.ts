@@ -1,4 +1,4 @@
-export interface UserProps {
+export interface DniProps {
     nombres: string;
     dni: string;
     apellidoPaterno: string;
@@ -6,9 +6,9 @@ export interface UserProps {
   }
   
   export interface TopAreaProps {
-    setUser: (user: UserProps | null) => void;
+    setDni: (user: DniProps | null) => void;
   }
   
   export interface UserDataProps {
-    user: UserProps;
+    user: DniProps;
   }
