@@ -46,7 +46,7 @@ export const ThemeContextProvider = (props: any) => {
 
   return (
     <ThemeContext.Provider value={{ changeTheme, lightMode}}>
-        <ThemeProvider theme={lightMode ? lightTheme : darkTheme}>
+        <ThemeProvider theme={lightMode ?  darkTheme : lightTheme}>
             {props.children}
         </ThemeProvider>
     </ThemeContext.Provider>

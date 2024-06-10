@@ -62,9 +62,9 @@ useEffect(() => {
   return (
     <Container>
       <ThemeArea>
-        <h1>
+        <Tittle>
           CONSULTA      
-        </h1>
+        </Tittle>
         <ChangeThemeBtn type="button" onClick={changeTheme}>
           {lightMode ? (
             <>
@@ -95,17 +95,26 @@ useEffect(() => {
           name="username"
           id="username"
           type="text"
-          placeholder="Search username ..."
+          placeholder="Consultar DNI ..."
         />
         {empty && <Warn>El campo no puede estar vacío</Warn>}
         {notFound && <Warn>No hay resultados</Warn>}
 
-        <SubmitBtn type="submit">Search</SubmitBtn>
+        <SubmitBtn type="submit">Consultar</SubmitBtn>
       </InputArea>
     </Container>
   );
 };
+const Tittle = styled.strong`
+  font-weight: bold;
+  font-size: 2rem;
+  line-height: 2.4rem;
+  color: ${(props) => props.theme.colors.textBolded};
 
+  @media (min-width: 768px) {
+    font-size: 2.7rem;
+  }
+`;
 const Container = styled.header`
   width: 100%;
   max-width: 73.3rem;
@@ -206,8 +215,13 @@ const SubmitBtn = styled.button`
     box-shadow: 0px 0px 15px -3px #0079ff;
   }
 
-  @media (min-width: 768px) {
-    width: 10.6rem;
-    font-size: 1.7rem;
+  @media (max-width: 768px) and (min-width: 650px) {
+    width: 10.5rem;
+    font-size: 1.6rem;
+  }
+
+   @media (max-width: 650px) and (min-width: 400px) {
+    width: 10.4rem;
+    font-size: 1.3rem;
   }
 `;
