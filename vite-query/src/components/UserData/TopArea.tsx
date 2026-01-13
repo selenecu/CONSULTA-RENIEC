@@ -1,94 +1,174 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
-interface TopAreaProps {
+// --- INTERFACES ---
+
+export interface DniData {
   nombres: string;
   dni: string;
   apellidoPaterno: string;
   apellidoMaterno: string;
 }
 
-export const TopArea = ({
-  nombres,
-  dni,
-  apellidoPaterno,
-  apellidoMaterno,
-}: TopAreaProps) => {
-  return (
-    <>
-      <Info>
-    <SideInfo>
-    <Nombres><p style={{ fontWeight: "normal" }}>NOMBRES:</p>{nombres}</Nombres>
-    <ApellidoPaterno><p style={{ fontWeight: "normal" }}>APELLIDO PATERNO:</p>{apellidoPaterno}</ApellidoPaterno>
-    <ApellidoMaterno><p style={{ fontWeight: "normal" }}>APELLIDO MATERNO:</p>{apellidoMaterno}</ApellidoMaterno>
+export interface RucData {
+  numero_documento: string;
+  razon_social: string;
+  estado: string;
+  condicion: string;
+  direccion: string;
+  departamento: string;
+  provincia: string;
+  distrito: string;
+  ubigeo?: string; // Opcionales por si no vienen
+  via_nombre?: string;
+  zona_codigo?: string;
+}
 
-    <Dni><p style={{ fontWeight: "normal" }}>DNI:</p>{dni}</Dni>
-    </SideInfo>
-      </Info>
-    </>
+// Unimos los dos tipos en uno solo
+interface ResultCardProps {
+  data: DniData | RucData;
+}
+
+// --- COMPONENTE PRINCIPAL ---
+
+export const TopArea = ({ data }: ResultCardProps) => {
+  
+  // Función para saber si es RUC (verificamos si tiene la propiedad 'razon_social')
+  const isRuc = (item: any): item is RucData => {
+    return 'razon_social' in item;
+  };
+
+  if (isRuc(data)) {
+    // --- VISTA PARA RUC ---
+    return (
+      <CardContainer>
+        <Grid>
+          <DataGroup>
+            <Label>RUC</Label>
+            <Value isHighlight>{data.numero_documento}</Value>
+          </DataGroup>
+          <DataGroup>
+            <Label>RAZÓN SOCIAL</Label>
+            <Value>{data.razon_social}</Value>
+          </DataGroup>
+          <DataGroup>
+            <Label>ESTADO</Label>
+            <Value>{data.estado}</Value>
+          </DataGroup>
+          <DataGroup>
+            <Label>CONDICIÓN</Label>
+            <Value>{data.condicion}</Value>
+          </DataGroup>
+          
+          {/* Información extra del RUC (ocupa todo el ancho en desktop) */}
+          <FullWidthGroup>
+            <Label>DIRECCIÓN FISCAL</Label>
+            <Value style={{ fontSize: '1.6rem' }}>
+              {data.direccion} 
+            </Value>
+            <SmallText>
+              {data.departamento} - {data.provincia} - {data.distrito}
+            </SmallText>
+          </FullWidthGroup>
+        </Grid>
+      </CardContainer>
+    );
+  }
+
+  // --- VISTA PARA DNI ---
+  return (
+    <CardContainer>
+      <Grid>
+        <DataGroup>
+          <Label>DNI</Label>
+          <Value isHighlight>{data.dni}</Value>
+        </DataGroup>
+        <DataGroup>
+          <Label>NOMBRES</Label>
+          <Value>{data.nombres}</Value>
+        </DataGroup>
+        <DataGroup>
+          <Label>APELLIDO PATERNO</Label>
+          <Value>{data.apellidoPaterno}</Value>
+        </DataGroup>
+        <DataGroup>
+          <Label>APELLIDO MATERNO</Label>
+          <Value>{data.apellidoMaterno}</Value>
+        </DataGroup>
+      </Grid>
+    </CardContainer>
   );
 };
 
-const Info = styled.div`
-  display: flex;
-  align-items: center;
+// --- STYLED COMPONENTS & ANIMACIONES ---
+
+const fadeIn = keyframes`
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 `;
 
-const Dni = styled.span`
-  color: ${(props) => props.theme.colors.textNorm};
-  font-size: 1.4rem;
-  line-height: 192%;
-  margin: 3.3rem 0 2.3rem;
-
-  @media (min-width: 768px) {
-    margin: 2.2rem 0 3.3rem;
-    font-size: 1.6rem;
-  }
+const CardContainer = styled.section`
+  width: 100%;
+  margin-top: 2.4rem;
+  padding: 2.4rem;
+  border-radius: 1.5rem;
+  background: ${(props) => props.theme.colors.card};
+  box-shadow: 0px 16px 30px -10px rgba(70, 96, 187, 0.2);
+  animation: ${fadeIn} 0.5s ease-out forwards;
 `;
 
-const ApellidoMaterno = styled.strong`
-  font-weight: bold;
-  font-size: 1.7rem;
-  line-height: 2.4rem;
-  color: ${(props) => props.theme.colors.textBolded};
-
-  @media (min-width: 768px) {
-    font-size: 2.7rem;
-  }
-`;
-
-const SideInfo = styled.div`
+const Grid = styled.div`
   display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
 
-  @media (min-width: 900px) {
+  @media (min-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
-    width: 100%;
-
-    span:last-of-type {
-      grid-column: 2 /3;
-      grid-row: 1 /2;
-      justify-self: end;
-    }
+    column-gap: 4rem;
+    row-gap: 2.5rem;
   }
 `;
 
-const Nombres = styled.strong`
-  font-weight: bold;
-  font-size: 1.7rem;
-  line-height: 2.4rem;
-  color: ${(props) => props.theme.colors.textBolded};
+const DataGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
 
+// Grupo que ocupa las 2 columnas en pantallas grandes (ideal para direcciones largas)
+const FullWidthGroup = styled(DataGroup)`
   @media (min-width: 768px) {
-    font-size: 2.7rem;
+    grid-column: span 2;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed ${(props) => props.theme.colors.textNorm}40;
   }
 `;
 
-const ApellidoPaterno = styled.strong`
-  font-weight: bold;
-  font-size: 1.7rem;
-  line-height: 2.4rem;
-  color: ${(props) => props.theme.colors.textBolded};
+const Label = styled.span`
+  font-size: 1.3rem;
+  color: ${(props) => props.theme.colors.textNorm};
+  opacity: 0.7;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  font-weight: 500;
+`;
+
+const Value = styled.strong<{ isHighlight?: boolean }>`
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: ${(props) => 
+    props.isHighlight ? "#0079ff" : props.theme.colors.textBolded};
+  word-break: break-word;
 
   @media (min-width: 768px) {
-    font-size: 2.7rem;
+    font-size: 2.4rem;
   }
+`;
+
+const SmallText = styled.span`
+  font-size: 1.4rem;
+  color: ${(props) => props.theme.colors.textNorm};
+  font-style: italic;
+  margin-top: 0.2rem;
 `;
