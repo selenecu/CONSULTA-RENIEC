@@ -52,9 +52,5 @@ Este proyecto utiliza un **Proxy** en Vite para conectar con la API de `decolect
 
 Las contribuciones son bienvenidas. Si tienes sugerencias para mejorar este proyecto, siéntete libre de hacer un fork y enviar un Pull Request.
 
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE.md](LICENSE.md) para más detalles.
-
 ---
 Desarrollado con ❤️ por [Tu Nombre](https://github.com/selenecu)
