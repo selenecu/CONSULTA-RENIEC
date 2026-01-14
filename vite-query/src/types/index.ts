@@ -1,5 +1,3 @@
-// src/types.ts
-
 export interface DniProps {
   nombres: string;
   dni: string;
@@ -17,18 +15,26 @@ export interface RucProps {
   provincia: string;
   distrito: string;
   ubigeo?: string;
-  // ... otros campos opcionales
+  via_nombre?: string;
+  via_tipo?: string;
+  zona_codigo?: string;
+  zona_tipo?: string;
+  interior?: string;
+  kilometro?: string;
+  lote?: string;
+  manzana?: string;
+  numero?: string;
+  dpto?: string;
 }
 
-// ⚠️ ESTO ES CLAVE: Un tipo que puede ser DNI o RUC
+// Unión de tipos
 export type SearchResult = DniProps | RucProps;
 
-// Props para el Buscador (TopArea)
+// Props para componentes
 export interface TopAreaProps {
   setResult: (data: SearchResult | null) => void;
 }
 
-// Props para la Tarjeta de Resultado (UserData/Index)
 export interface UserDataProps {
-  user: SearchResult; // Acepta cualquiera de los dos
+  user: SearchResult;
 }
