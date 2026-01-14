@@ -25,7 +25,7 @@ Sigue estos pasos para correr el proyecto en tu computadora:
 
 1.  **Clonar el repositorio:**
     ```bash
-    git clone ((https://github.com/selenecu/CONSULTA-RENIEC.git))
+    git clone (https://github.com/selenecu/CONSULTA-RENIEC.git)
     cd CONSULTA-RENIEC
     ```
 
@@ -53,4 +53,4 @@ Este proyecto utiliza un **Proxy** en Vite para conectar con la API de `decolect
 Las contribuciones son bienvenidas. Si tienes sugerencias para mejorar este proyecto, siéntete libre de hacer un fork y enviar un Pull Request.
 
 ---
-Desarrollado con ❤️ por Selene Culquicondor(https://github.com/selenecu)
+Desarrollado con ❤️ por **[Selene Culquicondor](https://github.com/selenecu)**
