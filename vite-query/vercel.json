@@ -3,6 +3,10 @@
     {
       "source": "/api-reniec/:match*",
       "destination": "https://api.decolecta.com/:match*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
