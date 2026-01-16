@@ -1,8 +1,12 @@
 {
   "rewrites": [
     {
-      "source": "/api-reniec/:match*",
-      "destination": "https://api.decolecta.com/:match*"
+      "source": "/api-reniec/:path*",
+      "destination": "https://api.decolecta.com/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
